@@ -19,7 +19,7 @@ export default {
   Tips: '<p>欢迎光临我的博客 🎉</p><p>这里会分享我的日常和学习中的收集、整理及总结，希望能对你有所帮助:💖</p>',
   // 首页打字机文案列表
   TypeWriteList: [
-    '守的云开见月明',
+    '守得云开见月明',
     "Every cloud has a silver lining",
   ],
   // 网站创建时间
@@ -53,12 +53,12 @@ export default {
     // 仅支持 SVG 且 SVG 需放在 public/assets/images/svg/ 目录下，填入文件名即可 <不需要文件后缀名>（封装了 SVG 组件 为了极致压缩 SVG）
     // 建议使用 https://tabler.io/icons 直接下载 SVG
     { text: '朋友', link: '/links', icon: 'Nav_friends' },
-    { text: '圈子', link: '/friends', icon: 'Nav_rss' },
+    //{ text: '圈子', link: '/friends', icon: 'Nav_rss' },
     { text: '动态', link: '/talking', icon: 'Nav_talking' },
     { text: '昔日', link: '/archives', icon: 'Nav_archives' },
-    { text: '留言', link: '/message', icon: 'Nav_message' },
+    //{ text: '留言', link: '/message', icon: 'Nav_message' },
     { text: '关于', link: '/about', icon: 'Nav_about' },
-    { text: 'API', link: 'https://api.vvhan.com/', target: true, icon: 'Nav_link' },
+   // { text: 'API', link: 'https://api.vvhan.com/', target: true, icon: 'Nav_link' },
   ],
   // 侧边栏个人网站
   WebSites: [
@@ -111,16 +111,16 @@ export default {
   GoogleAds: {
     ad_Client: '', //ca-pub-xxxxxx
     // 侧边栏广告(不填不开启)
-    asideAD_Slot: `<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxx" data-ad-slot="xxxxxx" data-ad-format="auto" data-full-width-responsive="true"></ins>`,
+    //asideAD_Slot: `<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxx" data-ad-slot="xxxxxx" data-ad-format="auto" data-full-width-responsive="true"></ins>`,
     // 文章页广告(不填不开启)
-    articleAD_Slot: `<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxx" data-ad-slot="xxxxxx" data-ad-format="auto" data-full-width-responsive="true"></ins>`
+    //articleAD_Slot: `<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxx" data-ad-slot="xxxxxx" data-ad-format="auto" data-full-width-responsive="true"></ins>`
   },
   // 文章内赞赏码
   Reward: {
     // 支付宝收款码
-    AliPay: '/assets/images/alipay.webp',
+    //AliPay: '/assets/images/alipay.webp',
     // 微信收款码
-    WeChat: '/assets/images/wechat.webp'
+    //WeChat: '/assets/images/wechat.webp'
   },
   // 访问网页 自动推送到搜索引擎
   SeoPush: {
