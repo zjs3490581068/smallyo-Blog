@@ -17,9 +17,9 @@ type: "about"
 
 ## 小站点
 
-|     主&emsp;页      |       <https://www.4ce.cn>        |
+|     主&emsp;页      |       <https://www.smallyo.com>        |
 | :-----------------: | :-------------------------------: |
-|   **博&emsp;客**    |    **<https://www.vvhan.com>**    |
+|   **博&emsp;客**    |    **<https://www.smallyo.com>**    |
 
 
 ## 联系我

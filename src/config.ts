@@ -10,7 +10,7 @@ export default {
   // 网站作者
   Author: '小yo',
   // 作者头像
-  Avatar: '/assets/images/touxiang.jpg',
+  Avatar: 'https://zycs-img-2lg.pages.dev/v2/B3pzFEB.jpeg',
   // 网站座右铭
   Motto: '持续进步.',
   // Cover 网站缩略图
