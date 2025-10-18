@@ -101,8 +101,8 @@ export default {
     },
     // Waline 评论
     Waline: {
-      enable: false,
-      serverURL: ''
+      enable: true,
+      serverURL: 'https://chimerical-biscochitos-6e9b46.netlify.app/.netlify/functions/comment/'
     }
   },
   // Han Analytics 统计（https://github.com/uxiaohan/HanAnalytics）
