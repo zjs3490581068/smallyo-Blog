@@ -2,7 +2,7 @@ export default {
   // 网站标题
   Title: '小yo博客',
   // 网站地址
-  Site: 'https://www.vvhan.com',
+  Site: 'https://www.smallyo.com',
   // 网站副标题
   Subtitle: '守得云开见月明',
   // 网站描述
