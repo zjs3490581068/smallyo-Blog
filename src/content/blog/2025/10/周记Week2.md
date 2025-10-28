@@ -4,7 +4,7 @@ categories: Week
 tags: ['周记']
 id: "b4bf8b95813e447e"
 date: 2025-10-26 19:37:25
-cover: "https://zycs-img-2lg.pages.dev/v2/i2Z0FKJ.jpeg"
+cover: "https://zycs-img-2lg.pages.dev/v2/O9THVjt.jpeg"
 ---
 
 :::note{type="success"}

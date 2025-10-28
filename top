@@ -1,0 +1,296 @@
+[33mcommit acf02a9cc212def42aa7aa34c75e939055b1a534[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Tue Oct 28 23:08:53 2025 +0800
+
+    资料更新
+
+[33mcommit 79a89cc28aa4f25e98cacdf550e6847885a61b3c[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Tue Oct 28 22:50:19 2025 +0800
+
+    资料更新
+
+[33mcommit 70d0f79de765d72e7bf1f3c8a619bc74309f4c33[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sun Oct 26 20:24:22 2025 +0800
+
+    新背景
+
+[33mcommit 2176755ea995047a690b643eef04d0a6d68e4307[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sun Oct 26 20:19:59 2025 +0800
+
+    周记2
+
+[33mcommit d1dcee37b68bba0e7177da36d9067058167e2952[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Fri Oct 24 23:58:38 2025 +0800
+
+    二叉树修改
+
+[33mcommit 0c84146623d848803b6847b245f88c3353b0a623[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Fri Oct 24 23:50:15 2025 +0800
+
+    二叉树第一次发布
+
+[33mcommit 4f5bcff70fb5f63e2eb805cccdffbae9236fc0e4[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Fri Oct 24 23:40:10 2025 +0800
+
+    二叉树博客
+
+[33mcommit e249cd68b1800a3d0b222011d01f72da3b1d1f38[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Fri Oct 24 23:28:37 2025 +0800
+
+    新博客
+
+[33mcommit 0a7f90c91e7495693d3eefe9015745bc636b67a0[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Fri Oct 24 18:46:19 2025 +0800
+
+    更改说说顺序
+
+[33mcommit ee10eb04e5a5aff93be5f626233ef5ff3f01cdc2[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Fri Oct 24 18:41:40 2025 +0800
+
+    新动态
+
+[33mcommit c4bdb0c51339ca405d3cc195f413036ba1d9f012[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Fri Oct 24 12:55:04 2025 +0800
+
+    新博客
+
+[33mcommit e203133fa0097a0d92e323fc961d51644368f6be[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Mon Oct 20 07:59:17 2025 +0800
+
+    周记更改
+
+[33mcommit b4aa1914fd503ac3ab80d5418428527df4ad3f88[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sun Oct 19 18:48:47 2025 +0800
+
+    week1
+
+[33mcommit aeab7b412805676b490b4a413722c4e277c1cdd1[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sun Oct 19 18:45:39 2025 +0800
+
+    周记Week1
+
+[33mcommit 037dbaf2b44aecbd793bfff222e0359cac36e64a[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sun Oct 19 16:55:33 2025 +0800
+
+    small
+
+[33mcommit c2545f9afea62eeef19b28ca17af73d6f0d90991[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sun Oct 19 03:09:20 2025 +0800
+
+    第一篇博客
+
+[33mcommit a6431b0dc13b0a35657e0e60a13fb1f8d8ed1108[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sun Oct 19 01:31:14 2025 +0800
+
+    Markdown测试
+
+[33mcommit cb4ff5d285b9c38b09f47edb72e8c76e94b44860[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sat Oct 18 23:21:22 2025 +0800
+
+    新说说
+
+[33mcommit eecd3f5fb37e523a425f328edc971a57d26bfadc[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sat Oct 18 23:17:48 2025 +0800
+
+    小更改
+
+[33mcommit 9e5af101132ca5689e642c5cd6a2ba09312478bd[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sat Oct 18 22:44:40 2025 +0800
+
+    增加评论功能
+
+[33mcommit 00dc1dc6ea6af0a3041a9023cdfe642c7d0c4237[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sat Oct 18 17:50:06 2025 +0800
+
+    第三次初始化
+
+[33mcommit 34b6924c6c2c7e8d12fe41e13dc15a541aede7a0[m
+Merge: cd9ca76 e087628
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sat Oct 18 14:09:39 2025 +0800
+
+    Merge branch 'main' of github.com:zjs3490581068/mypage
+
+[33mcommit e0876287b698d8bfd6f424e7d703c48e92d1d97e[m
+Author: yolo <3490581068@qq.com>
+Date:   Sat Oct 18 13:53:46 2025 +0800
+
+    Initial commit
+
+[33mcommit cd9ca76c062465b72a810bf02eccbd4a55d33c4f[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sat Oct 18 13:47:09 2025 +0800
+
+    2次初始化
+
+[33mcommit c21e53158d934de88c2eb1d722b1464964f19c51[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sat Oct 18 13:44:37 2025 +0800
+
+    初始化
+
+[33mcommit dfc6782dd22f97d9a4982945c5526ca072815680[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sat Oct 18 12:25:43 2025 +0800
+
+    delete 流量卡
+
+[33mcommit 36eb500817fb357b6a8a5af82850be148a123c38[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sat Oct 18 12:14:09 2025 +0800
+
+    modify WebSites
+
+[33mcommit 960fc33424d6b97d2553522d45f688c814f0dc57[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sat Oct 18 12:06:59 2025 +0800
+
+    modify Desscuription,Motto,Tips and background
+
+[33mcommit d164f54b87cc4b72f6b5661c7f9c7a5d1f0a9331[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sat Oct 18 11:55:53 2025 +0800
+
+    add touxiang
+
+[33mcommit 8bd8eefc97dcbbb5a1717f540206d54c95052c44[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sat Oct 18 11:53:32 2025 +0800
+
+    nothings
+
+[33mcommit bb909e946986828109a7c321ea251ba67d32c7a3[m
+Author: JiaShuo Zou <3490581068@qq.com>
+Date:   Sat Oct 18 11:32:03 2025 +0800
+
+    modify subtitle and TypeWriteList
+
+[33mcommit 8b81ca1e595e9561f479b7b453a870ede956e52f[m
+Author: Han <1655466387@qq.com>
+Date:   Wed Sep 24 14:35:27 2025 +0800
+
+    更新包✅
+
+[33mcommit 43d56cf18d4fa9d142032844eb28b9744d6d9663[m
+Author: Han <1655466387@qq.com>
+Date:   Wed Sep 24 14:19:43 2025 +0800
+
+    优化细节，添加下一篇
+
+[33mcommit 0d686e09a13ef87342a7aadee4c64ae53e12537a[m
+Merge: a515eca cce2791
+Author: Han <1655466387@qq.com>
+Date:   Fri Jun 6 11:03:52 2025 +0800
+
+    Merge branch 'main' of github.com:uxiaohan/vhAstro-Theme
+
+[33mcommit a515ecae3965ae5a4ee0fb5bf270ea671ddb204e[m
+Author: Han <1655466387@qq.com>
+Date:   Fri Jun 6 11:02:14 2025 +0800
+
+    优化细节✅
+
+[33mcommit cce2791c3f700b72d05a47e1d2fb9db8f0994869[m
+Merge: 2aa9784 1967e05
+Author: 是小韩啊 <1655466387@qq.com>
+Date:   Fri Jun 6 10:17:15 2025 +0800
+
+    Merge pull request #15 from Snarl3908/custom
+    
+    feat: 首页打字机动画完全可配置，TypeWriteList 为空或注释时不再渲染标签和动画
+
+[33mcommit 1967e05ec1bb9059e7303a98b9c1760f4c67ee7f[m
+Author: unknown <dydo@duck.com>
+Date:   Fri Jun 6 10:11:18 2025 +0800
+
+    feat: Reward 打赏组件支持无配置即不开启，未填写时页面不渲染
+
+[33mcommit f84e030c1e4b12eceb454cd0adf7860cd4079eac[m
+Author: unknown <dydo@duck.com>
+Date:   Wed Jun 4 11:41:42 2025 +0800
+
+    feat: 首页打字机动画完全可配置，TypeWriteList 为空或注释时不再渲染标签和动画
+    
+    - MainHeader.astro 条件渲染 <p class=desc>，仅在 TypeWriteList 有内容时输出
+    - Init.ts/TypeWrite.ts 仅在 TypeWriteList 有内容时初始化动画
+    - 彻底清理无用标签和副作用，提升主题可定制性
+
+[33mcommit 2aa978451dfc342264f1a837d08f7bfb7b3b76d3[m
+Author: Han <1655466387@qq.com>
+Date:   Tue May 13 10:17:49 2025 +0800
+
+    优化样式及部分逻辑✅
+
+[33mcommit 14d4e6e94b3f86d7e45af15fd7833e7f405cfb17[m
+Author: Han <1655466387@qq.com>
+Date:   Wed Apr 9 09:53:23 2025 +0800
+
+    添加 SeoPush ✅
+
+[33mcommit 33f9f8f0c874bf0eb6fab383477ce16a1ac28e68[m
+Author: Han <1655466387@qq.com>
+Date:   Wed Apr 9 09:51:45 2025 +0800
+
+    完善文档✅
+
+[33mcommit a87c93acd688f61432393d4a7119f7e4f7291108[m
+Author: Han <1655466387@qq.com>
+Date:   Mon Apr 7 18:32:06 2025 +0800
+
+    修改文档✅
+
+[33mcommit a2d19f50455dec1a524aea15d4895571d3777b06[m
+Author: Han <1655466387@qq.com>
+Date:   Mon Apr 7 13:47:47 2025 +0800
+
+    优化 tags 不存在问题
+
+[33mcommit ffebcb1099d019c8078ada6da9d421c637908253[m
+Author: Han <1655466387@qq.com>
+Date:   Mon Apr 7 12:02:11 2025 +0800
+
+    完善文档✅
+
+[33mcommit b7afb069167bc3ac113c0e370b5083ca8dad493c[m
+Author: Han <1655466387@qq.com>
+Date:   Mon Apr 7 11:48:32 2025 +0800
+
+    完善文档✅
+
+[33mcommit d0cafa72de20ea736facf475895efdf88b8791e7[m
+Author: Han <1655466387@qq.com>
+Date:   Mon Apr 7 11:34:37 2025 +0800
+
+    优化细节✅
+
+[33mcommit b4ed3273731701eb0dc57339f754bc98e4bf6672[m
+Author: Han <1655466387@qq.com>
+Date:   Sun Apr 6 19:24:39 2025 +0800
+
+    添加 rss Beautiful XSL
+
+[33mcommit f133016215570e47b098222eae997bcd450ae5ae[m
+Author: Han <1655466387@qq.com>
+Date:   Fri Apr 4 14:20:44 2025 +0800
+
+    优化�
