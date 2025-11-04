@@ -38,6 +38,7 @@ import "./Layout.less";
 				.map(([key, value]) => `${key}:${value};`)
 				.join("")}--vh-main-header-height:${Home ? HomeBanner.HomeHeight : HomeBanner.PageHeight};--vh-home-banner:${HomeBanner.background}}</style>`}
 		/>
+        <link rel="stylesheet" href="/styles/vlook/vlook.css" />
 	</Head>
 	<body>
 		<MobileSidebar />
@@ -46,7 +47,9 @@ import "./Layout.less";
 			{HomeBanner.enable && <MainHeader />}
 			<section class="main-inner" style={`padding-top:${HomeBanner.enable ? "0.88rem" : "calc(66px + 0.68rem)"}`}>
 				<section class="main-inner-content">
+				<article class="vlook-wrapper">
 					<slot />
+				</article>
 				</section>
 				<Aside />
 			</section>
