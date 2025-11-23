@@ -47,7 +47,9 @@ import "./Layout.less";
 			{HomeBanner.enable && <MainHeader />}
 			<section class="main-inner" style={`padding-top:${HomeBanner.enable ? "0.88rem" : "calc(66px + 0.68rem)"}`}>
 				<section class="main-inner-content">
-					</article>
+				<article class="vlook-wrapper">
+					<slot />
+				</article>
 				</section>
 				<Aside />
 			</section>
