@@ -8,6 +8,16 @@ import 'dayjs/locale/zh-cn'
 dayjs.locale('zh-cn');
 // 获取文章的描述
 const getDescription = (post: any, num: number = 150) => (post.rendered ? post.rendered.html.replace(/<[^>]+>/g, "").replace(/\s+/g, "") : post.body.replace(/\n/g, "").replace(/#/g, "")).slice(0, num) || '暂无简介'
+// 获取文章 Note 副标题
+const getSubtitle = (post: any) => {
+  // 尝试匹配 :::note ... ::: 中的内容
+  const noteMatch = post.body.match(/:::note[^\n]*\n([\s\S]*?)\n:::/);
+  if (noteMatch && noteMatch[1]) {
+    return noteMatch[1].trim();
+  }
+  // 没找到则回退到普通描述
+  return getDescription(post, 120);
+}
 //处理时间
 const fmtTime = (time: any, fmt: string = 'MMMM D, YYYY') => dayjs(time).utc().format(fmt)
 // 处理日期
@@ -103,4 +113,4 @@ const $POST = async (url: string, data: Record<string, any>, headers: Record<str
 
 
 
-export { $GET, $POST, getDescription, fmtTime, fmtDate, fmtPage, LoadScript, LoadStyle }
+export { $GET, $POST, getDescription, getSubtitle, fmtTime, fmtDate, fmtPage, LoadScript, LoadStyle }

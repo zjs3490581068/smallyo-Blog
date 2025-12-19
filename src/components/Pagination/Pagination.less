@@ -1,36 +1,47 @@
 section.vh-art-page {
-  position: absolute;
-  bottom: 0.88rem;
-  right: 0;
-  box-sizing: border-box;
+  /* Removed absolute positioning to fix overlap */
+  position: relative;
+  margin-top: 3rem;
   padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.8rem;
   width: 100%;
   height: max-content;
-  overflow: hidden;
+
+  &>span.vh-pagination-dots {
+    color: #99a9bf;
+    font-size: 1rem;
+    padding: 0 0.5rem;
+  }
 
   &>a.vh-pagination-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 0.5rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 0.6rem;
     background-color: var(--vh-white-color);
-    box-shadow: var(--vh-box-shadow);
-    font-size: 0.875rem;
-    color: #99a9bf;
+    box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.05);
+    /* Softer shadow */
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--vh-font-66);
+    /* Use variable */
     user-select: none;
-    transition: background-color 0.18s ease-in-out;
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     cursor: pointer;
     overflow: hidden;
+    text-decoration: none;
 
     &:hover {
       color: var(--vh-white-color);
-      background-color: rgba(129, 146, 174, 0.36);
+      background-color: var(--vh-main-color);
+      /* Use main color */
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.1);
 
       &>svg {
         color: var(--vh-white-color);
@@ -38,7 +49,9 @@ section.vh-art-page {
     }
 
     &.active {
-      background-color: #8192AE;
+      background-color: var(--vh-main-color);
+      box-shadow: 0 6px 16px -4px var(--vh-main-color-40, rgba(0, 0, 0, 0.2));
+      /* Glow effect */
       cursor: default;
       pointer-events: none;
       color: var(--vh-white-color);
@@ -46,16 +59,20 @@ section.vh-art-page {
 
     &.disabled {
       pointer-events: none;
+      opacity: 0.6;
+      background-color: #f7f8fa;
+      box-shadow: none;
 
       &>svg {
-        color: var(--vh-font-16);
+        color: #ccc;
       }
     }
 
     &>svg {
-      height: 1.18rem;
+      height: 1.1rem;
       width: auto;
       object-fit: contain;
+      transition: color 0.2s;
     }
   }
 }

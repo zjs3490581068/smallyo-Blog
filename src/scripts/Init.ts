@@ -39,6 +39,10 @@ import HanAnalyticsInit from "@/scripts/HanAnalytics";
 import SeoPushInit from "@/scripts/SeoPush";
 // SmoothScroll 滚动优化
 import SmoothScroll from "@/scripts/Smoothscroll";
+// Sakura 樱花特效
+import SakuraInit from "@/scripts/Sakura";
+// Cursor 鼠标特效
+import CursorInit from "@/scripts/Cursor";
 
 // ============================================================
 
@@ -55,6 +59,10 @@ const indexInit = async (only: boolean = true) => {
   only && SmoothScroll();
   // 图片灯箱
   only && ViewImage();
+  // 樱花特效 (Global - run every time to ensure canvas exists)
+  SakuraInit();
+  // 鼠标特效 (Global)
+  CursorInit();
   // 初始化文章代码块
   codeInit();
   // 图片懒加载初始化

@@ -23,7 +23,7 @@ const { headings = [] } = Astro.props;
 
 <style lang="less">
   .toc-widget {
-    background: var(--card-bg, #fff);
+    background: var(--vh-white-color, #fff);
   }
   
   .toc-content {
@@ -69,7 +69,7 @@ const { headings = [] } = Astro.props;
     &:hover, &.active {
       color: var(--vh-main-color, #4facfe);
       border-left-color: var(--vh-main-color, #4facfe);
-      background: linear-gradient(to right, rgba(79, 172, 254, 0.05), transparent);
+      background: linear-gradient(to right, var(--vh-main-color-6, rgba(79, 172, 254, 0.05)), transparent);
     }
   }
 </style>

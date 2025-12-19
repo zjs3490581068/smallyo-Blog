@@ -28,6 +28,13 @@ import "./Header.less";
 				))
 			}
 			<span class="nav-link vh-hover search-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg> 搜索</span>
+            
+            <!-- Dark Mode Toggle -->
+            <span class="nav-link vh-hover mode-btn" title="Switch Theme">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path></svg>
+            </span>
+
 			<span class="nav-link vh-hover menu-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 6h16"></path><path d="M7 12h13"></path><path d="M10 18h10"></path></svg></span>
 		</nav>
 		<Search />
@@ -66,15 +73,46 @@ import "./Header.less";
 		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
 	}
 	
-	header.vh-header.scrolled .nav-link,
-	header.vh-header.scrolled .home,
-	header.vh-header.scrolled span,
 	header.vh-header.scrolled svg {
 		color: #333 !important;
 		text-shadow: none !important;
 		stroke: #333 !important;
 		filter: none !important;
 	}
+
+    /* Dark Mode Header Adjustments */
+    :global(.dark) header.vh-header.scrolled {
+        background: rgba(30, 30, 30, 0.95) !important;
+    }
+    :global(.dark) header.vh-header.scrolled .nav-link,
+    :global(.dark) header.vh-header.scrolled .home,
+    :global(.dark) header.vh-header.scrolled span,
+    :global(.dark) header.vh-header.scrolled svg {
+        color: #e0e0e0 !important;
+        stroke: #e0e0e0 !important;
+    }
+
+    /* Toggle Button */
+    .mode-btn {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .mode-btn .icon-sun {
+        display: none;
+    }
+    .mode-btn .icon-moon {
+        display: block;
+    }
+    
+    /* Stronger specificity for Dark Mode */
+    html.dark .mode-btn .icon-sun {
+        display: block;
+    }
+    html.dark .mode-btn .icon-moon {
+        display: none;
+    }
 </style>
 
 <script>
@@ -101,4 +139,55 @@ import "./Header.less";
 	
 	// Run on View Transition navigation
 	document.addEventListener('astro:page-load', navInit);
+
+    // Dark Mode Logic
+    const modeInit = () => {
+        const modeBtn = document.querySelector('.mode-btn');
+        const root = document.documentElement;
+        
+        if (!modeBtn) return;
+
+        // 1. Sync State
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+
+        // 2. Click Handler (Named function to prevent dupes if we were using removeEventListener, 
+        // but here we just replace the element method to be safe and simple)
+        modeBtn.onclick = (e) => {
+            e.preventDefault(); // Stop any weird default behaviors
+            const isDark = root.classList.contains('dark');
+            
+            if (isDark) {
+                root.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                console.log('Mode switched to Light');
+            } else {
+                root.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                console.log('Mode switched to Dark');
+            }
+        };
+    };
+
+    // run on every page load (View Transitions)
+    // 'astro:page-load' fires on initial load AND after swap.
+    // We do NOT need to call modeInit() manually if we listen to this event.
+    document.addEventListener('astro:page-load', modeInit);
+    
+    // Fallback for non-ViewTransition setups or edge cases? 
+    // If 'astro:page-load' doesn't fire (e.g., standard Astro without ClientRouter?), 
+    // we might need a manual call. But with ClientRouter (which we seem to have), it fires.
+    // To be safe against race conditions (script running before event attached), we can check document.readyState.
+    if (document.readyState === 'loading') {
+        // Wait for event
+    } else {
+        // Already loaded? Fire once just in case the event missed? 
+        // Actually, astro:page-load is robust. Let's strictly rely on it to avoid double-binding.
+    }
 </script>

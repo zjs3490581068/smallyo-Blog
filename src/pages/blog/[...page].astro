@@ -13,7 +13,7 @@ export async function getStaticPaths(options: GetStaticPathsOptions) {
 	// 隐藏的文章不显示
 	return paginate(
 		posts.filter(i => !i.data.hide),
-		{ pageSize: 15 }
+		{ pageSize: 6 }
 	);
 }
 
@@ -39,6 +39,6 @@ const pageTitle = currentPage === 1 ? '博客' : `第${currentPage}页 | 博客`
 			{data.map((post, index) => <ArticleCard post={post} index={index} />)}
 			<!-- 分页 -->
 		</section>
-		<Pagination data={page_data.url} />
+		<Pagination page={page} />
 	</section>
 </Layout>

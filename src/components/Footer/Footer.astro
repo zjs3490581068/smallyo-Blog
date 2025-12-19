@@ -1,10 +1,54 @@
 ---
 // 基础 样式
 import "./Footer.less";
+import SITE_CONFIG from "@/config";
+import Svg from "@/components/Svg/Svg.astro";
 ---
 
 <footer class="vh-footer">
+    <!-- Animated Wave -->
+    <div class="footer-wave">
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+            <defs>
+                <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+            </defs>
+            <g class="parallax">
+                <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+                <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+                <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+                <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+            </g>
+        </svg>
+    </div>
+
+    <!-- Content -->
 	<main>
-		
+        <!-- Social Links (from Config) -->
+        <section class="footer-social">
+            {SITE_CONFIG.WebSites.map(site => (
+                <a href={site.link} target="_blank" rel="noopener noreferrer" title={site.text}>
+                    <Svg src={site.icon} />
+                </a>
+            ))}
+        </section>
+
+        <!-- Copyright & Info -->
+		<p>
+            <span>Copyright © {new Date().getFullYear()} <a href="/">{SITE_CONFIG.Author}</a></span>
+            <span class="separator">|</span>
+            <span>{SITE_CONFIG.Motto}</span>
+        </p>
+        <p>
+            <span class="runtime">
+                Running for <em class="web_time">Loading...</em>
+            </span>
+            <span class="separator">|</span>
+            <span>Powered by <a href="https://astro.build" target="_blank">Astro</a></span>
+        </p>
 	</main>
 </footer>
+
+<script>
+    // Simple script to move the wave or init logic if needed, 
+    // but the pure CSS animation in .less is better.
+</script>
