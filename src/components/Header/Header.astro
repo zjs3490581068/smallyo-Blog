@@ -33,3 +33,50 @@ import "./Header.less";
 		<Search />
 	</section>
 </header>
+
+<style is:global>
+	/* Glass Navbar Logic */
+	header.vh-header {
+		transition: all 0.3s ease-in-out;
+	}
+	
+	/* Initial State: Transparent & White Text */
+	header.vh-header:not(.scrolled) {
+		background: transparent !important;
+		backdrop-filter: none !important;
+		box-shadow: none !important;
+	}
+	
+	header.vh-header:not(.scrolled) .nav-link,
+	header.vh-header:not(.scrolled) .home,
+	header.vh-header:not(.scrolled) span {
+		color: #fff !important;
+		text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+	}
+
+	header.vh-header:not(.scrolled) svg {
+		stroke: #fff;
+		filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5));
+	}
+
+	/* Scrolled State: Glass */
+	header.vh-header.scrolled {
+		background: rgba(255, 255, 255, 0.85) !important;
+		backdrop-filter: blur(12px) !important;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+	}
+</style>
+
+<script>
+	const header = document.querySelector('header.vh-header');
+	const handleScroll = () => {
+		if (window.scrollY > 50) {
+			header?.classList.add('scrolled');
+		} else {
+			header?.classList.remove('scrolled');
+		}
+	};
+	window.addEventListener('scroll', handleScroll);
+	// Initial check
+	handleScroll();
+</script>

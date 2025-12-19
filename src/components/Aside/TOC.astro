@@ -1,0 +1,96 @@
+---
+const { headings = [] } = Astro.props;
+---
+
+{
+  headings.length > 0 && (
+    <section class="vh-aside-item toc-widget">
+      <h3>文章目录</h3>
+      <nav class="toc-content">
+        <ul class="toc-list">
+          {headings.map((heading) => (
+            <li class={`toc-item toc-level-${heading.depth}`}>
+              <a href={`#${heading.slug}`} class="toc-link">
+               <span class="toc-text">{heading.text}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </section>
+  )
+}
+
+<style lang="less">
+  .toc-widget {
+    background: var(--card-bg, #fff);
+  }
+  
+  .toc-content {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px;
+    
+    /* Custom Scrollbar */
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #eee;
+      border-radius: 2px;
+    }
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+
+  .toc-item {
+    line-height: 1.8;
+    position: relative;
+    
+    &.toc-level-2 { font-weight: 500; font-size: 0.95rem; margin-top: 5px;}
+    &.toc-level-3 { padding-left: 1rem; font-size: 0.9rem; color: #666; }
+    &.toc-level-4 { padding-left: 2rem; font-size: 0.85rem; color: #888; }
+    &.toc-level-5, &.toc-level-6 { padding-left: 2.5rem; }
+  }
+
+  .toc-link {
+    display: block;
+    color: var(--text-color, #333);
+    text-decoration: none;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    padding-left: 10px;
+    
+    &:hover, &.active {
+      color: var(--vh-main-color, #4facfe);
+      border-left-color: var(--vh-main-color, #4facfe);
+      background: linear-gradient(to right, rgba(79, 172, 254, 0.05), transparent);
+    }
+  }
+</style>
+
+<script>
+  // Simple Active Link Highlighting
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const id = entry.target.getAttribute('id');
+      if (entry.intersectionRatio > 0) {
+        document.querySelectorAll(`.toc-link`).forEach(link => {
+          link.classList.remove('active');
+        });
+        const activeLink = document.querySelector(`.toc-link[href="#${id}"]`);
+        if(activeLink) activeLink.classList.add('active');
+      }
+    });
+  });
+
+  // Track all headers that have an ID
+  document.querySelectorAll('article h2, article h3, article h4').forEach((section) => {
+    observer.observe(section);
+  });
+</script>

@@ -1,18 +1,13 @@
 ---
-const { title, keywords, description, pagecover, activeNav, headings } = Astro.props;
+const { title, keywords, description, pagecover, activeNav } = Astro.props;
 // 网站配置
 import SITE_INFO from "@/config";
-const { GoogleAds, Theme, HomeBanner } = SITE_INFO;
+const { GoogleAds, Theme } = SITE_INFO;
 const { ad_Client, asideAD_Slot, articleAD_Slot } = GoogleAds;
 // Head 依赖
 import Head from "@/components/Head/Head.astro";
 // 顶部 Header
 import Header from "@/components/Header/Header.astro";
-// Main 区域 Header
-import MainHeader from "@/components/MainHeader/MainHeader.astro";
-// Aside组件
-import Aside from "@/components/Aside/Aside.astro";
-import TOC from "@/components/Aside/TOC.astro";
 // 底部 Footer
 import Footer from "@/components/Footer/Footer.astro";
 // 返回顶部
@@ -23,8 +18,8 @@ import MobileSidebar from "@/components/MobileSidebar/MobileSidebar.astro";
 import "@/styles/Reset.less";
 // 全局基础样式
 import "@/styles/Base.less";
-// Layout 样式
-import "./Layout.less";
+// Layout 样式 (We can share the base layout styles or create specific ones)
+import "@/layouts/Layout/Layout.less"; 
 ---
 
 <html lang="zh-CN">
@@ -37,37 +32,39 @@ import "./Layout.less";
 		<Fragment
 			set:html={`<style>:root {${Object.entries(Theme)
 				.map(([key, value]) => `${key}:${value};`)
-				.join("")}--vh-main-header-height:${HomeBanner.PageHeight};--vh-home-banner:${HomeBanner.background}}</style>`}
+				.join("")}}</style>`}
 		/>
         <link rel="stylesheet" href="/styles/vlook/vlook.css" />
 	</Head>
 	<body>
 		<MobileSidebar />
+		<!-- Navbar -->
 		<Header activeNav={activeNav} />
-		<main class="main">
-			{HomeBanner.enable && <MainHeader isHome={false} />}
-			<section class="main-inner" style={`padding-top:${HomeBanner.enable ? "0.88rem" : "calc(66px + 0.88rem)"}`}>
-				<Aside />
-				<section class="main-inner-content">
-				<article class="vlook-wrapper">
-					<slot />
-				</article>
-				</section>
-				{headings && headings.length > 0 && (
-					<aside class="right-sidebar">
-						<section class="sticky-aside">
-							<TOC headings={headings} />
-						</section>
-					</aside>
-				)}
-			</section>
+		
+		<!-- Main Content Area (Full Width, No Sidebar, No Default Header padding logic) -->
+		<main class="main home-main">
+			<!-- We just render the slot directly. index.astro handles the container. -->
+			<slot />
+			
 			<BackTop />
 		</main>
+		
 		<Footer />
 		<script>
 			import InitFn from "@/scripts/Init";
 			// 全局初始化
 			InitFn();
 		</script>
+		
+		<style>
+			/* Home Specific Overrides */
+			.home-main {
+				width: 100%;
+				min-height: 100vh;
+				padding-top: 66px; /* Just clear the navbar */
+				display: flex;
+				flex-direction: column;
+			}
+		</style>
 	</body>
 </html>

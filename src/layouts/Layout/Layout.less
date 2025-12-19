@@ -12,21 +12,48 @@ main.main {
     position: relative;
     box-sizing: border-box;
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
+    /* Changed from row-reverse */
     width: 100%;
     max-width: var(--vh-main-max-width);
     height: max-content;
     z-index: 1;
+    gap: 1rem;
+    /* Spacing between columns */
 
     &>.main-inner-content {
-      flex: 1 1 0%;
+      flex: 1;
+      /* Takes remaining space */
       box-sizing: border-box;
-      padding: 0.88rem 0.66rem;
+      /* padding: 0.88rem 0.66rem; */
+      /* Removed/Reduced padding as gap handles spacing */
       width: 100%;
       min-width: 0;
       height: max-content;
       overflow: hidden;
     }
+
+    &>.right-sidebar {
+      width: 240px;
+      /* Fixed width for TOC */
+      flex-shrink: 0;
+
+      .sticky-aside {
+        position: sticky;
+        top: calc(var(--vh-main-header-height) + 1rem);
+        /* Stick below header */
+        /* If header is small on page, offset might need adjustment, e.g. 80px */
+        top: 80px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+
+  /* Hide TOC on smaller desktop/tablet */
+  main.main>.main-inner>.right-sidebar {
+    display: none;
   }
 }
 
@@ -34,6 +61,12 @@ main.main {
   main.main {
     &>.main-inner {
       flex-direction: column;
+
+      /* Reset order for mobile if needed, but flex-col usually fine: Aside Top -> Content Bottom. 
+         Wait, Usually mobile wants Content Top -> Aside Bottom. 
+         Since HTML order is Aside -> Content, we need column-reverse or reorder.
+      */
+      flex-direction: column-reverse;
     }
   }
 }

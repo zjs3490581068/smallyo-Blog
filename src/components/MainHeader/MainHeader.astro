@@ -1,12 +1,165 @@
 ---
 import SITE_INFO from "@/config";
 import "./MainHeader.less";
+
+const { isHome } = Astro.props;
 ---
 
-<div class="header-main">
-	<div class="avatar">
-		<img src="/assets/images/lazy-loading.webp" data-vh-lz-src={SITE_INFO.Avatar} alt="avatar" />
+<div class={`header-main ${isHome ? 'hero-section' : 'small-header'}`}>
+	<div class="hero-content">
+		<div class="avatar">
+			<img src="/assets/images/lazy-loading.webp" data-vh-lz-src={SITE_INFO.Avatar} alt="avatar" />
+		</div>
+		<h3 class="auther">{SITE_INFO.Author || "-"}</h3>
+		<p class="desc"></p>
 	</div>
-	<h3 class="auther">{SITE_INFO.Author || "-"}</h3>
-	<p class="desc"></p>
+
+	{isHome && (
+		<div class="wave-container">
+			<svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+			viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+				<defs>
+					<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+				</defs>
+				<g class="parallax">
+					<use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+					<use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+					<use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+					<use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+				</g>
+			</svg>
+		</div>
+	)}
+
+	<style>
+		/* Common Styles */
+		.header-main {
+			position: relative;
+			width: 100%;
+			background: var(--vh-home-banner);
+			background-attachment: fixed;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			overflow: hidden;
+		}
+
+		.header-main::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(0,0,0,0.3);
+			z-index: 0;
+		}
+
+		.hero-content {
+			position: relative;
+			z-index: 2;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 1rem;
+		}
+		
+		.header-main .avatar {
+			border: 2px solid #fff;
+			border-radius: 50%;
+			overflow: hidden;
+			transition: transform 0.3s ease-in-out;
+		}
+		
+		.header-main .avatar:hover {
+			transform: rotate(18.88deg);
+		}
+
+		.header-main .avatar img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	
+		.auther {
+			color: #fff;
+			text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+			font-weight: 600;
+		}
+
+		/* Full Screen Style (Home) */
+		.hero-section {
+			height: 100vh;
+			min-height: 600px;
+		}
+		.hero-section .avatar {
+			width: 8.5rem;
+			height: 8.5rem;
+		}
+		.hero-section .auther {
+			font-size: 2.5rem;
+			margin-top: 1rem;
+		}
+
+		/* Small Header Style (Other Pages) */
+		.small-header {
+			height: 350px; /* Smaller height for inner pages */
+			min-height: 250px;
+		}
+		.small-header .avatar {
+			width: 6rem;
+			height: 6rem;
+		}
+		.small-header .auther {
+			font-size: 1.8rem;
+			margin-top: 0.5rem;
+		}
+		
+		/* Wave Container */
+		.wave-container {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 10vh;
+			max-height: 100px;
+			z-index: 5;
+			pointer-events: none;
+		}
+		
+		.waves {
+			width: 100%;
+			height: 100%;
+		}
+	
+		.parallax > use {
+			animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+		}
+		.parallax > use:nth-child(1) {
+			animation-delay: -2s;
+			animation-duration: 7s;
+		}
+		.parallax > use:nth-child(2) {
+			animation-delay: -3s;
+			animation-duration: 10s;
+		}
+		.parallax > use:nth-child(3) {
+			animation-delay: -4s;
+			animation-duration: 13s;
+		}
+		.parallax > use:nth-child(4) {
+			animation-delay: -5s;
+			animation-duration: 20s;
+		}
+		@keyframes move-forever {
+			0% {
+			 transform: translate3d(-90px,0,0);
+			}
+			100% { 
+			 transform: translate3d(85px,0,0);
+			}
+		}
+	</style>
 </div>

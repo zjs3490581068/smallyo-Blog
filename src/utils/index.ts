@@ -38,7 +38,11 @@ const fmtDate = (time: string | Date, hours_status = true) => {
 };
 
 // 处理页码展示
-const fmtPage = (page: string | undefined) => page ? page.replace(/\//g, '') : null
+const fmtPage = (page: string | undefined) => {
+  if (!page) return null;
+  const match = page.match(/\/(\d+)\/?$/);
+  return match ? match[1] : '1';
+}
 // 加载外部脚本
 const LoadScript = (
   src: string,

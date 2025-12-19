@@ -28,10 +28,11 @@ import ArticleCard from "@/components/ArticleCard/ArticleCard.astro";
 import Layout from "@/layouts/Layout/Layout.astro";
 // 分页组件
 import Pagination from "@/components/Pagination/Pagination.astro";
-const currentPage = page_data.url.current.replace("/", "");
+const { currentPage } = page;
+const pageTitle = currentPage === 1 ? '博客' : `第${currentPage}页 | 博客`;
 ---
 
-<Layout title={currentPage ? `第${currentPage}页文章` : ""} description={Description} Home={true}>
+<Layout title={pageTitle} description={Description} isLandingPage={false} showAside={true}>
 	<section class="article-list-main">
 		<section class="article-list">
 			<!-- 文章列表 -->

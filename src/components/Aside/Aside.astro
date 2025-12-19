@@ -22,6 +22,8 @@ const recommendArticles = getRecommendArticles();
 import GoogleAd from "@/components/GoogleAd/GoogleAd.astro";
 // 侧边栏样式
 import "./Aside.less";
+
+const {  } = Astro.props;
 ---
 
 <aside class="vh-aside">
@@ -113,6 +115,7 @@ import "./Aside.less";
 	}
 	
 	<section class="sticky-aside">
+
 		<!-- 最新文章块 -->
 		{
 			recommendArticles.length && AsideShow.recommendArticleShow && (

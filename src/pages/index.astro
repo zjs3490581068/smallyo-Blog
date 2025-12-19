@@ -1,0 +1,288 @@
+---
+import Layout from "@/layouts/HomeLayout.astro";
+import SITE_CONFIG from "@/config";
+import { getCollection } from "astro:content";
+
+// Data
+const posts = await getCollection("blog");
+const nonHiddenPosts = posts.filter((p) => !p.data.hide);
+const tags = [...new Set(nonHiddenPosts.map((p) => p.data.tags).flat())];
+const categories = [...new Set(nonHiddenPosts.map((p) => p.data.category))];
+const stats = {
+  articles: nonHiddenPosts.length,
+  categories: categories.length,
+  tags: tags.length
+};
+
+const { Description, Author, Avatar, Motto, WebSites, HomeBanner } = SITE_CONFIG;
+const bgStyle = HomeBanner.background; // e.g. "url('...') center/cover"
+---
+
+<Layout title="Home" description={Description}>
+  <div class="sakura-hero">
+    <!-- Background layer -->
+    <div class="hero-bg" style={`background: ${bgStyle}`}></div>
+    <div class="hero-overlay"></div>
+
+    <!-- Center Info -->
+    <div class="center-content">
+       <div class="avatar-box">
+          <img src={Avatar} alt={Author} class="avatar-img" />
+       </div>
+       
+       <h1 class="glitch-text" data-text={Author}>{Author}</h1>
+       
+       <div class="motto-box">
+          <p class="motto-text typing">{Motto}</p>
+       </div>
+
+       <div class="social-row">
+          {WebSites.map(site => (
+             <a href={site.link} target="_blank" class="social-icon" title={site.text}>
+                {/* Simple mapping or text */}
+                <span class="s-text">{site.text}</span>
+             </a>
+          ))}
+       </div>
+    </div>
+
+    <!-- Stats HUD (The "Sidebar integration") -->
+    <div class="stats-hud">
+       <div class="stat-item">
+          <span class="num">{stats.articles}</span>
+          <span class="lbl">Articles</span>
+       </div>
+       <div class="sep"></div>
+       <div class="stat-item">
+          <span class="num">{stats.categories}</span>
+          <span class="lbl">Topics</span>
+       </div>
+       <div class="sep"></div>
+       <div class="stat-item">
+          <span class="num">{stats.tags}</span>
+          <span class="lbl">Tags</span>
+       </div>
+       <div class="action-btn">
+          <a href="/blog">Enter Blog <span class="arr">→</span></a>
+       </div>
+    </div>
+
+    <!-- Bottom Wave -->
+    <div class="wave-bottom">
+       <svg class="wave-svg" viewBox="0 0 1920 150" preserveAspectRatio="none">
+          <path d="M0,150 L0,40 Q250,150 500,40 Q750,-70 1000,40 Q1250,150 1500,40 Q1750,-70 1920,40 L1920,150 Z" fill="#ffffff" opacity="0.4"></path>
+          <path d="M0,150 L0,70 Q250,180 500,70 Q750,-40 1000,70 Q1250,180 1500,70 Q1750,-40 1920,70 L1920,150 Z" fill="#ffffff" opacity="0.7"></path>
+          <path d="M0,150 L0,100 Q250,210 500,100 Q750,-10 1000,100 Q1250,210 1500,100 Q1750,-10 1920,100 L1920,150 Z" fill="#ffffff"></path>
+       </svg>
+    </div>
+    
+  </div>
+
+  <style>
+    /* Global */
+    .sakura-hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Serif SC', 'Source Serif Pro', serif; /* Classic Serif for Sakura feeling */
+      color: #fff;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    /* Dot overlay */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-image: radial-gradient(rgba(0,0,0,0.2) 1px, transparent 1px);
+      background-size: 4px 4px; /* classic grid dots */
+      background-color: rgba(0,0,0,0.1);
+    }
+
+    /* Center Content */
+    .center-content {
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transform: translateY(-20px);
+    }
+
+    .avatar-box {
+      width: 130px;
+      height: 130px;
+      margin-bottom: 2rem;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.5);
+      position: relative;
+      transition: transform 1s ease;
+    }
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .avatar-box:hover .avatar-img {
+       transform: rotate(360deg);
+    }
+
+    /* Glitch Text */
+    .glitch-text {
+      font-size: 3.5rem;
+      font-weight: 700;
+      position: relative;
+      color: #fff;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+      margin-bottom: 1rem;
+      animation: glitch-skew 1s infinite linear alternate-reverse;
+    }
+    .glitch-text::before, .glitch-text::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); /* Should be transparent usually for text? or matching bg? */
+      /* Actually for glitch text over image, we just offset color channels */
+      background: transparent;
+    }
+    .glitch-text::before {
+      left: 2px;
+      text-shadow: -1px 0 #ff00c1;
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim 5s infinite linear alternate-reverse;
+    }
+    .glitch-text::after {
+      left: -2px;
+      text-shadow: -1px 0 #00fff9;
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim2 5s infinite linear alternate-reverse;
+    }
+
+    /* Motto */
+    .motto-box {
+      margin-bottom: 2rem;
+      background: rgba(0,0,0,0.3);
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+    }
+    .motto-text {
+      font-size: 1.1rem;
+       letter-spacing: 1px;
+    }
+    
+    /* Socials */
+    .social-row {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .social-icon {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.9rem;
+      position: relative;
+      padding-bottom: 2px;
+      transition: color 0.3s;
+    }
+    .social-icon:hover { color: #fe9600; /* Orange highlight like Sakura theme sometimes */ }
+    .social-icon::after {
+       content: '';
+       position: absolute;
+       bottom: 0; left: 0; width: 0; height: 1px;
+       background: #fe9600;
+       transition: width 0.3s;
+    }
+    .social-icon:hover::after { width: 100%; }
+
+    /* Stats HUD */
+    .stats-hud {
+       position: absolute;
+       bottom: 100px; /* Above waves */
+       display: flex;
+       align-items: center;
+       background: rgba(255, 255, 255, 0.15);
+       backdrop-filter: blur(8px);
+       padding: 0.8rem 2rem;
+       border-radius: 100px;
+       border: 1px solid rgba(255, 255, 255, 0.2);
+       gap: 2rem;
+       z-index: 10;
+       animation: fade-up 1s ease 0.5s backwards;
+    }
+    .stat-item {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       line-height: 1;
+    }
+    .stat-item .num { font-size: 1.2rem; font-weight: 700; font-family: sans-serif; }
+    .stat-item .lbl { font-size: 0.7rem; text-transform: uppercase; opacity: 0.8; margin-top: 4px; }
+    .sep { width: 1px; height: 20px; background: rgba(255,255,255,0.3); }
+    
+    .action-btn a {
+       display: flex;
+       align-items: center;
+       gap: 5px;
+       background: #fff;
+       color: #333;
+       padding: 0.5rem 1.2rem;
+       border-radius: 20px;
+       font-size: 0.85rem;
+       font-weight: 700;
+       text-decoration: none;
+       transition: transform 0.2s;
+    }
+    .action-btn a:hover { transform: scale(1.05); }
+
+    /* Wave */
+    .wave-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 5;
+      line-height: 0; /* Fix SVG gap */
+    }
+    .wave-svg {
+       width: 100%;
+       height: 100px; /* Adjust height */
+       fill: #fff; /* Matches page bg if white */
+    }
+    /* If page background is not white, this wave should match body bg. Layout usually keeps body white below. */
+
+    /* Animations */
+    @keyframes glitch-anim {
+      0% { clip: rect(30px, 9999px, 10px, 0); }
+      50% { clip: rect(80px, 9999px, 90px, 0); }
+      100% { clip: rect(10px, 9999px, 50px, 0); }
+    }
+    @keyframes glitch-anim2 {
+      0% { clip: rect(60px, 9999px, 80px, 0); }
+      50% { clip: rect(20px, 9999px, 10px, 0); }
+      100% { clip: rect(90px, 9999px, 10px, 0); }
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @media (max-width: 768px) {
+       .glitch-text { font-size: 2.5rem; }
+       .stats-hud { width: 90%; gap: 1rem; padding: 0.8rem 1rem; justify-content: space-around; }
+       .wave-svg { height: 60px; }
+    }
+  </style>
+</Layout>
