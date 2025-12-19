@@ -44,7 +44,7 @@ import "./Layout.less";
 	<body>
 		<MobileSidebar />
 		<Header activeNav={activeNav} />
-		<main class="main">
+		<main class="main" transition:name="inner-root" transition:animate="fade">
 			{HomeBanner.enable && <MainHeader isHome={false} />}
 			<section class="main-inner" style={`padding-top:${HomeBanner.enable ? "0.88rem" : "calc(66px + 0.88rem)"}`}>
 				<Aside />

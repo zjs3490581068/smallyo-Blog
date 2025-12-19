@@ -42,7 +42,7 @@ import "@/layouts/Layout/Layout.less";
 		<Header activeNav={activeNav} />
 		
 		<!-- Main Content Area (Full Width, No Sidebar, No Default Header padding logic) -->
-		<main class="main home-main">
+		<main class="main home-main" transition:name="home-root" transition:animate="fade">
 			<!-- We just render the slot directly. index.astro handles the container. -->
 			<slot />
 			

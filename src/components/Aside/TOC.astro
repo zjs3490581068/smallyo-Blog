@@ -75,22 +75,29 @@ const { headings = [] } = Astro.props;
 </style>
 
 <script>
-  // Simple Active Link Highlighting
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      const id = entry.target.getAttribute('id');
-      if (entry.intersectionRatio > 0) {
-        document.querySelectorAll(`.toc-link`).forEach(link => {
-          link.classList.remove('active');
-        });
-        const activeLink = document.querySelector(`.toc-link[href="#${id}"]`);
-        if(activeLink) activeLink.classList.add('active');
-      }
+  const initTOC = () => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const id = entry.target.getAttribute('id');
+        if (entry.intersectionRatio > 0) {
+          document.querySelectorAll(`.toc-link`).forEach(link => {
+            link.classList.remove('active');
+          });
+          const activeLink = document.querySelector(`.toc-link[href="#${id}"]`);
+          if(activeLink) activeLink.classList.add('active');
+        }
+      });
     });
-  });
 
-  // Track all headers that have an ID
-  document.querySelectorAll('article h2, article h3, article h4').forEach((section) => {
-    observer.observe(section);
-  });
+    // Track all headers that have an ID
+    document.querySelectorAll('article h2, article h3, article h4').forEach((section) => {
+      observer.observe(section);
+    });
+  };
+
+  // Run on first load
+  initTOC();
+
+  // Run on subsequent navigations (View Transitions)
+  document.addEventListener('astro:page-load', initTOC);
 </script>
