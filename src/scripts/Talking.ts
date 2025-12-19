@@ -6,7 +6,7 @@ import { $GET } from '@/utils/index'
 import vhLzImgInit from "@/scripts/vhLazyImg";
 
 const TalkingInit = async (data: any) => {
-  const talkingDOM = document.querySelector('.main-inner-content>.vh-tools-main>main.talking-main')
+  const talkingDOM = document.querySelector('.vh-tools-main>main.talking-main')
   if (!talkingDOM) return;
   try {
     let res = data;

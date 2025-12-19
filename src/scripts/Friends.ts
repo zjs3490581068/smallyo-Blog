@@ -6,7 +6,7 @@ import { $GET } from '@/utils/index'
 import vhLzImgInit from "@/scripts/vhLazyImg";
 
 const FriendsInit = async (data: any) => {
-	const friendsDOM = document.querySelector('.main-inner-content>.vh-tools-main>main.friends-main')
+	const friendsDOM = document.querySelector('.vh-tools-main>main.friends-main')
 	if (!friendsDOM) return;
 	try {
 		let res = data;

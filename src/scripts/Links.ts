@@ -4,7 +4,7 @@ import { $GET } from '@/utils/index'
 import vhLzImgInit from "@/scripts/vhLazyImg";
 // 渲染
 const LinksInit = async (data: any) => {
-  const linksDOM = document.querySelector('.main-inner-content>.vh-tools-main>main.links-main')
+  const linksDOM = document.querySelector('.vh-tools-main>main.links-main')
   if (!linksDOM) return;
   try {
     let res = data;
