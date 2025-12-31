@@ -27,17 +27,21 @@ const { headings = [] } = Astro.props;
   }
   
   .toc-content {
-    max-height: 400px;
+    max-height: calc(100vh - 160px);
     overflow-y: auto;
-    padding-right: 5px;
+    padding-right: 8px;
+    margin-right: -4px;
     
     /* Custom Scrollbar */
     &::-webkit-scrollbar {
       width: 4px;
     }
     &::-webkit-scrollbar-thumb {
-      background: #eee;
-      border-radius: 2px;
+      background: var(--vh-main-color-16, #eee);
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
     }
   }
 
