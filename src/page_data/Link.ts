@@ -14,6 +14,12 @@ export default {
       "link": "https://smallsmallq.com",
       "avatar": "https://i.postimg.cc/zvQ41bSP/logo.png",
       "descr": "一个非典型法学生的个人网站"
+    },
+    {
+      "name": "Yeliqin666",
+      "link": "https://yeliqin666.pages.dev/",
+      "avatar": "https://yeliqin666.pages.dev/img/favicon.png",
+      "descr": "一枚物理专业的大学僧"
     }
   ]
 }
