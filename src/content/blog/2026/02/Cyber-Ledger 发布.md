@@ -1,15 +1,17 @@
 ---
-title: "Cyber-Ledger 发布：写给自己的一款本地记账 App"
+title: "Cyber-Ledger 发布：一款本地记账 App"
 categories: Project
 tags: ['开发记录', 'App发布']
 id: "65f15a85aacb4761"
 date: 2026-02-21 12:03:03
-cover: ""
+cover: "https://zycs-img-2lg.pages.dev/v2/VZpcBn8.png"
 ---
 
 :::note{type="success"}
-历时几天的折腾，终于把我一直心心念念的记账 App —— `Cyber-Ledger` (赛博账本) 给敲出来了。没有花哨的云同步强制绑定，也没有各种冗杂的社区和广告，这只是一款单纯查账、记账的本地应用。
+本文为 gemini3.1pro 所写，笔者未进行任何修改，只写了这一段话。
 :::
+
+历时几天的折腾，终于把我一直心心念念的记账 App —— `Cyber-Ledger` (赛博账本) 给敲出来了。没有花哨的云同步强制绑定，也没有各种冗杂的社区和广告，这只是一款单纯查账、记账的本地应用。
 
 ### 缘起
 
