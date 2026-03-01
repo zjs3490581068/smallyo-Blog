@@ -1,7 +1,7 @@
 ---
 title: "《Scalable Diffusion Models with Transformers》论文精读"
 categories: Papers
-tags: ['深度学习','图像生成','扩散模型'’]
+tags: ['深度学习','图像生成','扩散模型']
 id: "papers-DiT"
 date: 2026-03-01 20:23:48
 cover: "https://zycs-img-2lg.pages.dev/v2/fTConBp.png"
