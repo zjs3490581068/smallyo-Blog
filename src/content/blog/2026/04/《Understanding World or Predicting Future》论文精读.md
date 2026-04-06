@@ -1,5 +1,5 @@
 ---
-title: "《Understanding World or Predicting Future?》论文精读"
+title: "《Understanding World or Predicting Future》论文精读"
 categories: Papers
 tags: ['深度学习','世界模型']
 id: "papers-UWPF"
