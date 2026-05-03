@@ -16,19 +16,82 @@
       width: 100%;
       max-width: 100%;
       word-break: break-all;
+    }
+
+    .vh-heading {
+      --vh-heading-bar-width: 0.72rem;
+      --vh-heading-bar-height: 0.14rem;
+      --vh-heading-bar-color: var(--vh-font-28);
+
+      position: relative;
+      display: block;
+      margin: 1.666rem 0 0.36rem;
+      padding-left: calc(var(--vh-heading-bar-width) + 0.56rem);
+      padding-bottom: 0;
+      overflow-wrap: anywhere;
+
+      &::before {
+        content: "";
+        position: absolute;
+        display: block;
+        left: 0;
+        top: 0.78em;
+        width: var(--vh-heading-bar-width);
+        height: var(--vh-heading-bar-height);
+        border-radius: 999px;
+        background-color: var(--vh-heading-bar-color);
+        transition: background-color 0.18s ease-in-out, opacity 0.18s ease-in-out, transform 0.18s ease-in-out;
+      }
 
       &:hover {
         &::before {
-          color: var(--vh-main-color-88);
+          background-color: var(--vh-main-color-88);
+          opacity: 0.88;
+          transform: scaleX(1.08);
         }
       }
+    }
 
-      &::before {
-        padding-right: 0.56rem;
-        content: "#";
-        color: var(--vh-font-28);
-        transition: color 0.18s ease-in-out;
-      }
+    .vh-heading-level-1 {
+      --vh-heading-bar-width: 2.8rem;
+      --vh-heading-bar-height: 0.32rem;
+      --vh-heading-bar-color: var(--vh-main-color);
+
+      font-size: 1.58rem;
+    }
+
+    .vh-heading-level-2 {
+      --vh-heading-bar-width: 2.28rem;
+      --vh-heading-bar-height: 0.26rem;
+      --vh-heading-bar-color: var(--vh-info);
+
+      font-size: 1.5rem;
+    }
+
+    .vh-heading-level-3 {
+      --vh-heading-bar-width: 1.78rem;
+      --vh-heading-bar-height: 0.22rem;
+      --vh-heading-bar-color: var(--vh-success);
+
+      font-size: 1.25rem;
+    }
+
+    .vh-heading-level-4 {
+      --vh-heading-bar-width: 1.32rem;
+      --vh-heading-bar-height: 0.18rem;
+      --vh-heading-bar-color: var(--vh-warning);
+
+      font-size: 1.125rem;
+    }
+
+    .vh-heading-level-5 {
+      --vh-heading-bar-width: 0.98rem;
+      --vh-heading-bar-height: 0.16rem;
+      --vh-heading-bar-color: var(--vh-error);
+    }
+
+    .vh-heading-level-6 {
+      --vh-heading-bar-color: var(--vh-import);
     }
 
     h1 {
@@ -38,10 +101,6 @@
 
       &.error-title {
         font-size: 1.88rem;
-      }
-
-      &::before {
-        display: none;
       }
     }
 
@@ -67,7 +126,7 @@
       line-height: 1.6;
 
       li {
-        color: var(--vh-font-66);
+        color: var(--vh-font-color);
         font-size: 0.875rem;
         line-height: 1.6;
       }
@@ -88,6 +147,27 @@
         background-color: var(--vh-font-16);
         padding: .125rem .375rem;
         font-size: 0.8125rem;
+      }
+    }
+
+    p.vh-math-block {
+      padding: 0.888rem 0;
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      text-align: center;
+      white-space: nowrap;
+
+      .katex {
+        font-size: 1.12em;
+      }
+
+      .katex-display {
+        margin: 0;
+      }
+
+      math[display="block"] {
+        font-size: 1.12em;
       }
     }
 
