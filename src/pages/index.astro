@@ -1,288 +1,746 @@
 ---
 import Layout from "@/layouts/HomeLayout.astro";
 import SITE_CONFIG from "@/config";
+import { getDescription, fmtTime } from "@/utils/index";
+import { getHomeStats } from "@/utils/getHomeStats";
 import { getCollection } from "astro:content";
 
-// Data
 const posts = await getCollection("blog");
-const nonHiddenPosts = posts.filter((p) => !p.data.hide);
-const tags = [...new Set(nonHiddenPosts.map((p) => p.data.tags).flat())];
-const categories = [...new Set(nonHiddenPosts.map((p) => p.data.category))];
-const stats = {
-  articles: nonHiddenPosts.length,
-  categories: categories.length,
-  tags: tags.length
-};
+const homeStats = getHomeStats(posts);
 
-const { Description, Author, Avatar, Motto, WebSites, HomeBanner } = SITE_CONFIG;
-const bgStyle = HomeBanner.background; // e.g. "url('...') center/cover"
+const { Description, Author, Avatar, Motto, HomeBanner, Navs, CreateTime } = SITE_CONFIG;
+const bgStyle = HomeBanner.background;
+const latestPostTitle = homeStats.latestPost?.data.title || "暂无文章";
+const latestUpdateText = homeStats.latestUpdatedAt ? fmtTime(homeStats.latestUpdatedAt, "YYYY-MM-DD") : "暂无更新";
+
+const statCards = [
+  { label: "文章", value: homeStats.articleCount },
+  { label: "估算字数", value: homeStats.totalWordsText },
+  { label: "分类", value: homeStats.categoryCount },
+  { label: "标签", value: homeStats.tagCount },
+];
+
+const profileTags = ["西安交通大学", "计算机科学与技术", "CS 学习", "知识整理"];
+const quickEntries = [
+  { title: "阅读博客", desc: "按时间浏览全部文章", href: "/blog" },
+  { title: "昔日归档", desc: "按月份回看写作轨迹", href: "/archives" },
+  { title: "关于我", desc: "了解小yo和这个小站", href: "/about" },
+  { title: "动态", desc: "查看近期碎片记录", href: "/talking" },
+];
 ---
 
 <Layout title="Home" description={Description}>
-  <div class="sakura-hero">
-    <!-- Background layer -->
-    <div class="hero-bg" style={`background: ${bgStyle}`}></div>
-    <div class="hero-overlay"></div>
+  <div class="home-page">
+    <section class="home-hero">
+      <div class="hero-bg" style={`background: ${bgStyle}`}></div>
+      <div class="hero-shade"></div>
 
-    <!-- Center Info -->
-    <div class="center-content">
-       <div class="avatar-box">
-          <img src={Avatar} alt={Author} class="avatar-img" />
-       </div>
-       
-       <h1 class="glitch-text" data-text={Author}>{Author}</h1>
-       
-       <div class="motto-box">
-          <p class="motto-text typing">{Motto}</p>
-       </div>
+      <div class="hero-inner">
+        <div class="hero-copy vh-animation vh-animation-init">
+          <span class="eyebrow">小yo博客 / Since {CreateTime}</span>
+          <h1>小 yo 博客</h1>
+          <p class="hero-desc">{Description}</p>
+          <div class="hero-actions">
+            <a class="primary-link" href="/blog">
+              进入博客
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+            </a>
+            <a class="secondary-link" href="/about">了解我</a>
+          </div>
+        </div>
 
-       <div class="social-row">
-          {WebSites.map(site => (
-             <a href={site.link} target="_blank" class="social-icon" title={site.text}>
-                {/* Simple mapping or text */}
-                <span class="s-text">{site.text}</span>
-             </a>
+        <aside class="hero-card vh-animation vh-animation-init">
+          <img src={Avatar} alt={Author} class="hero-avatar" />
+        </aside>
+      </div>
+
+      <div class="hero-status">
+        <span>最近更新</span>
+        <strong>{latestUpdateText}</strong>
+        <a href={homeStats.latestPost ? `/article/${homeStats.latestPost.data.id}` : "/blog"}>{latestPostTitle}</a>
+      </div>
+    </section>
+
+    <section class="home-section stats-section">
+      <div class="section-inner">
+        <div class="section-heading">
+          <span>Overview</span>
+          <h2>小站概览</h2>
+          <p>这里汇总了博客目前的内容规模、更新情况和主要写作方向。</p>
+        </div>
+
+        <div class="stats-grid">
+          {statCards.map((item) => (
+            <article class="stat-card">
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </article>
           ))}
-       </div>
-    </div>
+        </div>
 
-    <!-- Stats HUD (The "Sidebar integration") -->
-    <div class="stats-hud">
-       <div class="stat-item">
-          <span class="num">{stats.articles}</span>
-          <span class="lbl">Articles</span>
-       </div>
-       <div class="sep"></div>
-       <div class="stat-item">
-          <span class="num">{stats.categories}</span>
-          <span class="lbl">Topics</span>
-       </div>
-       <div class="sep"></div>
-       <div class="stat-item">
-          <span class="num">{stats.tags}</span>
-          <span class="lbl">Tags</span>
-       </div>
-       <div class="action-btn">
-          <a href="/blog">Enter Blog <span class="arr">→</span></a>
-       </div>
-    </div>
+        <div class="writing-panel">
+          <div class="writing-main">
+            <span class="panel-label">Writing pulse</span>
+            <h3>最近一次更新在 {latestUpdateText}</h3>
+            <p>最新发布：《{latestPostTitle}》。</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <!-- Bottom Wave -->
-    <div class="wave-bottom">
-       <svg class="wave-svg" viewBox="0 0 1920 150" preserveAspectRatio="none">
-          <path d="M0,150 L0,40 Q250,150 500,40 Q750,-70 1000,40 Q1250,150 1500,40 Q1750,-70 1920,40 L1920,150 Z" fill="#ffffff" opacity="0.4"></path>
-          <path d="M0,150 L0,70 Q250,180 500,70 Q750,-40 1000,70 Q1250,180 1500,70 Q1750,-40 1920,70 L1920,150 Z" fill="#ffffff" opacity="0.7"></path>
-          <path d="M0,150 L0,100 Q250,210 500,100 Q750,-10 1000,100 Q1250,210 1500,100 Q1750,-10 1920,100 L1920,150 Z" fill="#ffffff"></path>
-       </svg>
-    </div>
-    
+    <section class="home-section about-section">
+      <div class="section-inner about-grid">
+        <div class="about-copy">
+          <span>About</span>
+          <h2>你好，我是小yo</h2>
+          <p>
+            我是一名来自西安交通大学的计算机科学与技术专业 2024 级本科生。这里记录我在 CS 学习、技术探索和日常生活里的收集、整理与总结。
+          </p>
+          <p>
+            我始终保持对新鲜事物的热情，也希望把知识和经验整理成对自己、对读者都更有用的内容。
+          </p>
+          <div class="tag-row">
+            {profileTags.map((tag) => <span>{tag}</span>)}
+          </div>
+        </div>
+        <div class="about-profile">
+          <img src={Avatar} alt={Author} />
+          <div>
+            <h3>{Author}</h3>
+            <p>{Motto}</p>
+          </div>
+          <a href="/about">查看完整介绍</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section posts-section">
+      <div class="section-inner">
+        <div class="section-heading compact">
+          <span>Recent posts</span>
+          <h2>最近文章</h2>
+          <p>从最近更新开始，快速进入我的写作现场。</p>
+        </div>
+
+        <div class="posts-list">
+          {homeStats.recentPosts.map((post) => (
+            <article class="post-row">
+              <a class="post-title" href={`/article/${post.data.id}`}>
+                <span>{post.data.title}</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+              </a>
+              <p>{getDescription(post, 88)}</p>
+              <div class="post-meta">
+                <a href={`/categories/${post.data.categories}`}>{post.data.categories}</a>
+                <time>{fmtTime(post.data.updated ?? post.data.date, "YYYY-MM-DD")}</time>
+                <span>{(post.data.tags || []).slice(0, 3).map((tag) => `#${tag}`).join(" ")}</span>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section entries-section">
+      <div class="section-inner entries-grid">
+        <div class="section-heading">
+          <span>Explore</span>
+          <h2>从这里开始逛</h2>
+          <p>除了最近文章，也可以按归档、分类和站内页面进入不同内容。</p>
+        </div>
+
+        <div class="entry-list">
+          {quickEntries.map((entry) => (
+            <a class="entry-card" href={entry.href}>
+              <strong>{entry.title}</strong>
+              <span>{entry.desc}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="section-inner category-strip">
+        {homeStats.topCategories.map((category) => (
+          <a href={`/categories/${category.name}`}>
+            <span>{category.name}</span>
+            <strong>{category.count}</strong>
+          </a>
+        ))}
+      </div>
+
+      <nav class="section-inner nav-strip" aria-label="站点导航">
+        {Navs.map((nav) => (
+          <a href={nav.link} target={nav.target ? "_blank" : "_self"}>{nav.text}</a>
+        ))}
+      </nav>
+    </section>
   </div>
 
   <style>
-    /* Global */
-    .sakura-hero {
-      position: relative;
-      height: 100vh;
+    .home-page {
+      --home-border: rgb(from var(--vh-font-color) r g b / 10%);
+      --home-muted: var(--vh-font-66);
+      --home-soft: rgb(from var(--vh-main-color) r g b / 10%);
+      color: var(--vh-font-color);
       width: 100%;
-      overflow: hidden;
+    }
+
+    .home-hero {
+      position: relative;
+      min-height: 92vh;
+      width: 100%;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      font-family: 'Noto Serif SC', 'Source Serif Pro', serif; /* Classic Serif for Sakura feeling */
+      overflow: hidden;
       color: #fff;
+    }
+
+    .hero-bg,
+    .hero-shade {
+      position: absolute;
+      inset: 0;
     }
 
     .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: -2;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-    /* Dot overlay */
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      background-image: radial-gradient(rgba(0,0,0,0.2) 1px, transparent 1px);
-      background-size: 4px 4px; /* classic grid dots */
-      background-color: rgba(0,0,0,0.1);
+      z-index: 0;
+      transform: scale(1.02);
     }
 
-    /* Center Content */
-    .center-content {
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      transform: translateY(-20px);
+    .hero-shade {
+      z-index: 1;
+      background:
+        linear-gradient(90deg, rgba(6, 13, 18, 0.82) 0%, rgba(6, 13, 18, 0.56) 46%, rgba(6, 13, 18, 0.24) 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.04) 62%, var(--vh-body-bg) 100%);
     }
 
-    .avatar-box {
-      width: 130px;
-      height: 130px;
-      margin-bottom: 2rem;
-      border-radius: 50%;
-      border: 3px solid rgba(255,255,255,0.5);
+    .hero-inner,
+    .section-inner {
+      width: min(1180px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .hero-inner {
       position: relative;
-      transition: transform 1s ease;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 290px;
+      gap: 3rem;
+      align-items: center;
+      padding: 8rem 0 7rem;
     }
-    .avatar-img {
+
+    .eyebrow,
+    .section-heading span,
+    .about-copy > span,
+    .panel-label {
+      display: inline-flex;
+      width: fit-content;
+      color: var(--vh-main-color);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .hero-copy h1 {
+      max-width: none;
+      margin: 1rem 0 1.25rem;
+      font-size: clamp(4.4rem, 9vw, 7.2rem);
+      line-height: 1.04;
+      font-weight: 800;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .hero-desc {
+      max-width: 620px;
+      margin: 0;
+      font-size: 1.12rem;
+      line-height: 1.9;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .hero-actions,
+    .tag-row,
+    .post-meta,
+    .nav-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .hero-actions {
+      margin-top: 2rem;
+    }
+
+    .primary-link,
+    .secondary-link,
+    .about-profile a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.9rem;
+      padding: 0 1.25rem;
+      border-radius: 8px;
+      font-weight: 700;
+      transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .primary-link {
+      gap: 0.5rem;
+      color: #06221f;
+      background: #fff;
+    }
+
+    .secondary-link {
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .primary-link:hover,
+    .secondary-link:hover,
+    .about-profile a:hover,
+    .entry-card:hover,
+    .post-title:hover {
+      transform: translateY(-2px);
+    }
+
+    .primary-link svg,
+    .post-title svg {
+      width: 1rem;
+      height: 1rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex: 0 0 auto;
+    }
+
+    .hero-card,
+    .stat-card,
+    .writing-panel,
+    .about-profile,
+    .post-row,
+    .entry-card,
+    .category-strip a {
+      border: 1px solid var(--home-border);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+    }
+
+    .hero-card {
+      align-self: center;
+      justify-self: end;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
-      height: 100%;
+      box-sizing: border-box;
+      color: #fff;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .hero-avatar {
+      width: min(23vw, 16rem);
+      height: min(23vw, 16rem);
       border-radius: 50%;
       object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-    .avatar-box:hover .avatar-img {
-       transform: rotate(360deg);
+      border: 4px solid rgba(255, 255, 255, 0.72);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+      transform: rotate(0turn) scale(1);
+      transition: transform 0.72s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+      will-change: transform;
     }
 
-    /* Glitch Text */
-    .glitch-text {
-      font-size: 3.5rem;
-      font-weight: 700;
-      position: relative;
-      color: #fff;
-      text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-      margin-bottom: 1rem;
-      animation: glitch-skew 1s infinite linear alternate-reverse;
+    .hero-avatar:hover {
+      transform: rotate(1turn) scale(1.04);
+      box-shadow: 0 28px 78px rgba(0, 0, 0, 0.34);
     }
-    .glitch-text::before, .glitch-text::after {
-      content: attr(data-text);
+
+    .tag-row span,
+    .post-meta a,
+    .post-meta span,
+    .nav-strip a {
+      border-radius: 999px;
+      background: var(--home-soft);
+      color: var(--vh-main-color);
+      padding: 0.38rem 0.72rem;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .hero-status {
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5); /* Should be transparent usually for text? or matching bg? */
-      /* Actually for glitch text over image, we just offset color channels */
+      z-index: 3;
+      left: 50%;
+      bottom: 1.25rem;
+      display: grid;
+      grid-template-columns: auto auto minmax(0, 1fr);
+      gap: 0.75rem;
+      align-items: center;
+      width: min(1180px, calc(100% - 2rem));
+      transform: translateX(-50%);
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-status span {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .hero-status strong {
+      color: #fff;
+    }
+
+    .hero-status a {
+      color: #fff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .home-section {
+      width: 100%;
+      padding: 5rem 0;
+    }
+
+    .stats-section,
+    .posts-section {
+      background: var(--vh-body-bg);
+    }
+
+    .about-section,
+    .entries-section {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .section-heading {
+      max-width: 650px;
+      margin-bottom: 2rem;
+    }
+
+    .section-heading.compact {
+      margin-bottom: 1.4rem;
+    }
+
+    .section-heading h2,
+    .about-copy h2 {
+      margin: 0.55rem 0 0.75rem;
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .section-heading p,
+    .about-copy p,
+    .writing-main p,
+    .post-row p {
+      margin: 0;
+      color: var(--home-muted);
+      line-height: 1.85;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .stat-card {
+      padding: 1.3rem;
+      background: var(--vh-white-color);
+    }
+
+    .stat-card span {
+      color: var(--home-muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .stat-card strong {
+      display: block;
+      margin: 0.8rem 0 0.4rem;
+      color: var(--vh-font-color);
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .writing-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: center;
+      margin-top: 1rem;
+      padding: 1.35rem;
+      background: linear-gradient(135deg, var(--vh-main-color-16), rgba(221, 134, 54, 0.12));
+      box-shadow: none;
+    }
+
+    .writing-main h3 {
+      margin: 0.5rem 0 0.45rem;
+      font-size: 1.35rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .about-copy p + p {
+      margin-top: 1rem;
+    }
+
+    .tag-row {
+      margin-top: 1.5rem;
+    }
+
+    .about-profile {
+      padding: 1.25rem;
+      background: var(--vh-white-color);
+    }
+
+    .about-profile img {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .about-profile h3 {
+      margin: 1rem 0 0.3rem;
+      font-size: 1.5rem;
+    }
+
+    .about-profile p {
+      margin: 0;
+      color: var(--home-muted);
+    }
+
+    .about-profile a {
+      width: 100%;
+      margin-top: 1.2rem;
+      color: #fff;
+      background: var(--vh-main-color);
+    }
+
+    .posts-list {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .post-row {
+      padding: 1.25rem;
+      background: var(--vh-white-color);
+      box-shadow: none;
+    }
+
+    .post-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.65rem;
+      color: var(--vh-font-color);
+      font-size: 1.18rem;
+      font-weight: 800;
+      line-height: 1.55;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .post-title:hover {
+      color: var(--vh-main-color);
+    }
+
+    .post-title span {
+      min-width: 0;
+    }
+
+    .post-meta {
+      margin-top: 0.9rem;
+      color: var(--home-muted);
+    }
+
+    .post-meta time {
+      color: var(--home-muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .entries-grid {
+      display: grid;
+      grid-template-columns: 330px minmax(0, 1fr);
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .entry-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .entry-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-height: 8rem;
+      padding: 1.25rem;
+      background: var(--vh-white-color);
+      box-shadow: none;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .entry-card:hover {
+      border-color: var(--vh-main-color-56);
+    }
+
+    .entry-card strong {
+      color: var(--vh-font-color);
+      font-size: 1.18rem;
+    }
+
+    .entry-card span {
+      color: var(--home-muted);
+      line-height: 1.7;
+    }
+
+    .category-strip,
+    .nav-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .category-strip a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.75rem 0.9rem;
+      background: var(--vh-white-color);
+      box-shadow: none;
+    }
+
+    .category-strip span {
+      color: var(--vh-font-color);
+      font-weight: 700;
+    }
+
+    .category-strip strong {
+      color: var(--vh-main-color);
+    }
+
+    .nav-strip {
+      padding-bottom: 1rem;
+    }
+
+    :global(html.dark) .home-page {
+      --home-border: rgba(255, 255, 255, 0.1);
+      --home-soft: rgba(1, 196, 182, 0.16);
+    }
+
+    :global(html.dark) .stat-card,
+    :global(html.dark) .about-profile,
+    :global(html.dark) .post-row,
+    :global(html.dark) .entry-card,
+    :global(html.dark) .category-strip a {
+      background: rgba(30, 30, 30, 0.94);
+      box-shadow: none;
+    }
+
+    :global(html.dark) .hero-card {
       background: transparent;
     }
-    .glitch-text::before {
-      left: 2px;
-      text-shadow: -1px 0 #ff00c1;
-      clip: rect(44px, 450px, 56px, 0);
-      animation: glitch-anim 5s infinite linear alternate-reverse;
-    }
-    .glitch-text::after {
-      left: -2px;
-      text-shadow: -1px 0 #00fff9;
-      clip: rect(44px, 450px, 56px, 0);
-      animation: glitch-anim2 5s infinite linear alternate-reverse;
+
+    :global(html.dark) .about-section,
+    :global(html.dark) .entries-section {
+      background: rgba(255, 255, 255, 0.02);
     }
 
-    /* Motto */
-    .motto-box {
-      margin-bottom: 2rem;
-      background: rgba(0,0,0,0.3);
-      padding: 0.5rem 1.5rem;
-      border-radius: 50px;
+    :global(html.dark) .writing-panel {
+      background: linear-gradient(135deg, rgba(1, 196, 182, 0.14), rgba(221, 134, 54, 0.12));
     }
-    .motto-text {
-      font-size: 1.1rem;
-       letter-spacing: 1px;
-    }
-    
-    /* Socials */
-    .social-row {
-      display: flex;
-      gap: 1.5rem;
-    }
-    .social-icon {
-      color: rgba(255,255,255,0.8);
-      text-decoration: none;
-      font-size: 0.9rem;
-      position: relative;
-      padding-bottom: 2px;
-      transition: color 0.3s;
-    }
-    .social-icon:hover { color: #fe9600; /* Orange highlight like Sakura theme sometimes */ }
-    .social-icon::after {
-       content: '';
-       position: absolute;
-       bottom: 0; left: 0; width: 0; height: 1px;
-       background: #fe9600;
-       transition: width 0.3s;
-    }
-    .social-icon:hover::after { width: 100%; }
 
-    /* Stats HUD */
-    .stats-hud {
-       position: absolute;
-       bottom: 100px; /* Above waves */
-       display: flex;
-       align-items: center;
-       background: rgba(255, 255, 255, 0.15);
-       backdrop-filter: blur(8px);
-       padding: 0.8rem 2rem;
-       border-radius: 100px;
-       border: 1px solid rgba(255, 255, 255, 0.2);
-       gap: 2rem;
-       z-index: 10;
-       animation: fade-up 1s ease 0.5s backwards;
-    }
-    .stat-item {
-       display: flex;
-       flex-direction: column;
-       align-items: center;
-       line-height: 1;
-    }
-    .stat-item .num { font-size: 1.2rem; font-weight: 700; font-family: sans-serif; }
-    .stat-item .lbl { font-size: 0.7rem; text-transform: uppercase; opacity: 0.8; margin-top: 4px; }
-    .sep { width: 1px; height: 20px; background: rgba(255,255,255,0.3); }
-    
-    .action-btn a {
-       display: flex;
-       align-items: center;
-       gap: 5px;
-       background: #fff;
-       color: #333;
-       padding: 0.5rem 1.2rem;
-       border-radius: 20px;
-       font-size: 0.85rem;
-       font-weight: 700;
-       text-decoration: none;
-       transition: transform 0.2s;
-    }
-    .action-btn a:hover { transform: scale(1.05); }
+    @media screen and (max-width: 960px) {
+      .hero-inner,
+      .about-grid,
+      .entries-grid {
+        grid-template-columns: 1fr;
+      }
 
-    /* Wave */
-    .wave-bottom {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      z-index: 5;
-      line-height: 0; /* Fix SVG gap */
-    }
-    .wave-svg {
-       width: 100%;
-       height: 100px; /* Adjust height */
-       fill: #fff; /* Matches page bg if white */
-    }
-    /* If page background is not white, this wave should match body bg. Layout usually keeps body white below. */
+      .hero-card,
+      .about-profile {
+        max-width: 420px;
+      }
 
-    /* Animations */
-    @keyframes glitch-anim {
-      0% { clip: rect(30px, 9999px, 10px, 0); }
-      50% { clip: rect(80px, 9999px, 90px, 0); }
-      100% { clip: rect(10px, 9999px, 50px, 0); }
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
-    @keyframes glitch-anim2 {
-      0% { clip: rect(60px, 9999px, 80px, 0); }
-      50% { clip: rect(20px, 9999px, 10px, 0); }
-      100% { clip: rect(90px, 9999px, 10px, 0); }
-    }
-    @keyframes fade-up {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    @media (max-width: 768px) {
-       .glitch-text { font-size: 2.5rem; }
-       .stats-hud { width: 90%; gap: 1rem; padding: 0.8rem 1rem; justify-content: space-around; }
-       .wave-svg { height: 60px; }
+
+    @media screen and (max-width: 720px) {
+      .home-hero {
+        min-height: 0;
+      }
+
+      .hero-inner {
+        gap: 2rem;
+        padding: 7rem 0 7.5rem;
+      }
+
+      .hero-copy h1 {
+        font-size: 2.55rem;
+      }
+
+      .hero-desc {
+        font-size: 1rem;
+      }
+
+      .hero-card {
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .hero-avatar {
+        width: 9.5rem;
+        height: 9.5rem;
+      }
+
+      .hero-status {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+      }
+
+      .home-section {
+        padding: 3rem 0;
+      }
+
+      .stats-grid,
+      .entry-list {
+        grid-template-columns: 1fr;
+      }
+
+      .post-title {
+        align-items: flex-start;
+      }
+
+      .post-title svg {
+        margin-top: 0.35rem;
+      }
     }
   </style>
 </Layout>
