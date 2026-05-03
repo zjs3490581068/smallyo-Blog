@@ -158,8 +158,15 @@
       text-align: center;
       white-space: nowrap;
 
-      .katex {
+      &>.katex {
+        display: inline-block;
+        max-width: 100%;
         font-size: 1.12em;
+      }
+
+      &>.katex math,
+      &>math {
+        font-size: inherit;
       }
 
       .katex-display {
