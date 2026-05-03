@@ -3,6 +3,46 @@ import { visit } from 'unist-util-visit';
 import getReadingTime from 'reading-time';
 import { toString } from 'mdast-util-to-string';
 
+const headingLevels = new Map(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].map((tagName, index) => [tagName, index + 1]));
+
+const getClassNames = (node: any) => {
+  const classValue = node.properties?.class ?? node.properties?.className ?? '';
+  return Array.isArray(classValue) ? classValue : `${classValue}`.split(/\s+/).filter(Boolean);
+}
+
+const addClass = (node: any, className: string) => {
+  node.properties = node.properties || {};
+  const classNames = new Set(getClassNames(node));
+  classNames.add(className);
+  node.properties.class = [...classNames].join(' ');
+}
+
+const hasClass = (node: any, className: string): boolean => getClassNames(node).includes(className);
+
+const hasDescendantClass = (node: any, className: string): boolean => {
+  if (!node) return false;
+  if (hasClass(node, className)) return true;
+  return node.children?.some((child: any) => hasDescendantClass(child, className)) || false;
+}
+
+const hasDisplayMath = (node: any): boolean => {
+  if (!node) return false;
+  if (hasClass(node, 'katex-display')) return true;
+  if (node.tagName === 'math' && node.properties?.display === 'block') return true;
+  return node.children?.some((child: any) => hasDisplayMath(child)) || false;
+}
+
+const isWhitespaceText = (node: any) => node.type === 'text' && node.value.trim() === '';
+
+const isMathBlockParagraph = (node: any) => {
+  if (node.tagName !== 'p') return false;
+  const children = (node.children || []).filter((child: any) => !isWhitespaceText(child));
+  if (children.length !== 1) return false;
+
+  const [child] = children;
+  return hasDisplayMath(child) || hasDescendantClass(child, 'katex') || hasDescendantClass(child, 'language-math');
+}
+
 // 处理标签
 const remarkNote = () => {
   return (tree: any, { data: astroData }: any) => {
@@ -42,6 +82,16 @@ const remarkNote = () => {
 const addClassNames = () => {
   return (tree: any) => {
     visit(tree, (node, index, parent) => {
+      const headingLevel = headingLevels.get(node.tagName);
+      if (headingLevel) {
+        addClass(node, 'vh-heading');
+        addClass(node, `vh-heading-level-${headingLevel}`);
+      }
+
+      if (isMathBlockParagraph(node)) {
+        addClass(node, 'vh-math-block');
+      }
+
       // 处理 a 标签
       if (node.tagName === 'a') {
         node.properties.target = '_blank', node.properties.rel = 'noopener nofollow'
