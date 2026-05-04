@@ -26,7 +26,7 @@ export default defineConfig({
 			serialize: (item) => ({ ...item, url: item.url.endsWith('/') ? item.url.slice(0, -1) : item.url })
 		}),
 		mdx({ extendMarkdownConfig: false }),
-		Compressor({ gzip: false, brotli: true, fileExtensions: [".html", ".css", ".js"] })
+		Compressor({ gzip: true, brotli: true, fileExtensions: [".html", ".css", ".js"] })
 	],
 	markdown: {
 		remarkPlugins: [remarkMath, remarkDirective, remarkNote,],
